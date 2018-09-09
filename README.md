@@ -5,3 +5,4 @@ mySOstats : Matlab function, detects the sleep slow oscillations and saves stats
 mySpindleStats: Python function, detects the sleep spindles (Mohsen's method) and EEG power spectra and saves the outputs in mat format.
 spndl.ipynb: Jupyther notebook for using the mySpindleStats function.
 There is another spindle detection code based on Wamsely et al paper in https://github.com/mohsenbme/EEGspindles. You can use it only of you have saved separate edf files for Stage 2 and SWS. It also gives you other stats such as spindle frequency, duration, and amplitude.
+myeegpwr_v2: calculates EEG powers in frequency bands for artifact-rejected epochs.
