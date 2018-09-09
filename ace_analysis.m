@@ -1,4 +1,23 @@
 function ace=ace_analysis()
+% Needs three input files to be browsed manually: 
+% 1) sleep edf data,  2) A text file with sleep scores in one column,
+% 3) Matlab-exported Kubios output of RR intervals
+% The outputs are saved in a structure called "ace". 
+% The output vectors have 4 elements, each represents powers in a 5-sec window.
+% The first and second elements are related to the activities before the HR bursts (-10 to -5; -5 to 0),
+% and the last two columns are related to 0-5 sec and 5-10 sec after HR bursts. 
+% Just double clock on the ace in the workspace to see the outputs. The names should be self explanatory. 
+% recommendations: You can create change scores in different ways.
+% 1) subtract the baseline value from each element. For example subtract blDelta_sws_F4 from avDelta_sws_F4. 
+% Since the increase in Delta/Sigma is in the second 5-sec bin you can calculate
+% a new variable: (avDelta_sws_F4(2)-blDelta_sws_F4)/(avDelta_sws_F4(2)+blDelta_sws_F4)
+% or (avDelta_sws_F4(2)-blDelta_sws_F4)/(blDelta_sws_F4); 
+% For HF, the 3rd element increases after the HR burst (see methods of my paper) 
+% 2) create a change score based on pre- and post-ace values:  (avDelta_sws_F4(2)-avDelta_sws_F4(3))/(avDelta_sws_F4(2)+avDelta_sws_F4(3))
+
+
+
+
 % --------------parameters
 segmin=3; % at least 3 minutes for a stable stage
 hrbwin=20; % window size around HR burst
