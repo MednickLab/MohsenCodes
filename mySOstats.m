@@ -1,5 +1,5 @@
 function out=mySOstats(edfPath,ScoresPath)
-
+% Programmed by Mohsen Naji, 2018
 % Refer to Dang-Vu et al PNAS 2008 for more details
 
 %                       . . b
@@ -12,6 +12,10 @@ function out=mySOstats(edfPath,ScoresPath)
 % if you like to modify the thresholds refer to function mysodetect at the
 % end of this program
 % dlta: a>40, a+b>75, 300<c<1500 ms, d<1000ms
+% two file paths are required for this function: 1) edf file 2) score files
+% sleep scores for this function should be in the following matlab format: 
+% a mat file with a variable named stages in a structure named stageData
+% outputs (csv, mat, txt) will be saved in SO_stats folder in the edf file directory
 
 %%%%% Parameters %%%%%%%%%
 q=4; % number of quartiles (quantiles)
