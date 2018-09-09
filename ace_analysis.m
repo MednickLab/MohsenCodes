@@ -1,4 +1,5 @@
 function ace=ace_analysis()
+% Programmed by Mohsen Naji, 2018
 % Needs three input files to be browsed manually: 
 % 1) sleep edf data,  2) A text file with sleep scores in one column,
 % 3) Matlab-exported Kubios output of RR intervals
