@@ -118,44 +118,7 @@ for j=1:length(Channels)
     output=table(Stage,duration,Delta, Alpha, Theta, SlowSigma, FastSigma);
     writetable(output,[desdir PathName(end) Channels{1,j} '.csv'],'Delimiter',',','QuoteStrings',true);
 end
-%     
-%     wake_delta=Delta(find(Stage==0)); P_wake_delta(j,1)=mean(wake_delta(find(wake_delta<(mean(wake_delta)+3*std(wake_delta)))));
-%     stg1_delta=Delta(find(Stage==1)); P_stg1_delta(j,1)=mean(stg1_delta(find(stg1_delta<(mean(stg1_delta)+3*std(stg1_delta)))));
-%     stg2_delta=Delta(find(Stage==2)); P_stg2_delta(j,1)=mean(stg2_delta(find(stg2_delta<(mean(stg2_delta)+3*std(stg2_delta)))));
-%     stg3_delta=Delta(find(Stage==3)); P_stg3_delta(j,1)=mean(stg3_delta(find(stg3_delta<(mean(stg3_delta)+3*std(stg3_delta)))));
-%     rem_delta=Delta(find(Stage==5)); P_rem_delta(j,1)=mean(rem_delta(find(rem_delta<(mean(rem_delta)+3*std(rem_delta)))));
-%     
-%     wake_theta=Theta(find(Stage==0)); P_wake_theta(j,1)=mean(wake_theta(find(wake_theta<(mean(wake_theta)+3*std(wake_theta)))));
-%     stg1_theta=Theta(find(Stage==1)); P_stg1_theta(j,1)=mean(stg1_theta(find(stg1_theta<(mean(stg1_theta)+3*std(stg1_theta)))));
-%     stg2_theta=Theta(find(Stage==2)); P_stg2_theta(j,1)=mean(stg2_theta(find(stg2_theta<(mean(stg2_theta)+3*std(stg2_theta)))));
-%     stg3_theta=Theta(find(Stage==3)); P_stg3_theta(j,1)=mean(stg3_theta(find(stg3_theta<(mean(stg3_theta)+3*std(stg3_theta)))));
-%     rem_theta=Theta(find(Stage==5)); P_rem_theta(j,1)=mean(rem_theta(find(rem_theta<(mean(rem_theta)+3*std(rem_theta)))));
-%     
-%     wake_alpha=Alpha(find(Stage==0)); P_wake_alpha(j,1)=mean(wake_alpha(find(wake_alpha<(mean(wake_alpha)+3*std(wake_alpha)))));
-%     stg1_alpha=Alpha(find(Stage==1)); P_stg1_alpha(j,1)=mean(stg1_alpha(find(stg1_alpha<(mean(stg1_alpha)+3*std(stg1_alpha)))));
-%     stg2_alpha=Alpha(find(Stage==2)); P_stg2_alpha(j,1)=mean(stg2_alpha(find(stg2_alpha<(mean(stg2_alpha)+3*std(stg2_alpha)))));
-%     stg3_alpha=Alpha(find(Stage==3)); P_stg3_alpha(j,1)=mean(stg3_alpha(find(stg3_alpha<(mean(stg3_alpha)+3*std(stg3_alpha)))));
-%     rem_alpha=Alpha(find(Stage==5)); P_rem_alpha(j,1)=mean(rem_alpha(find(rem_alpha<(mean(rem_alpha)+3*std(rem_alpha)))));
-%     
-%     wake_slowsigma=SlowSigma(find(Stage==0)); P_wake_slowsigma(j,1)=mean(wake_slowsigma(find(wake_slowsigma<(mean(wake_slowsigma)+3*std(wake_slowsigma)))));
-%     stg1_slowsigma=SlowSigma(find(Stage==1)); P_stg1_slowsigma(j,1)=mean(stg1_slowsigma(find(stg1_slowsigma<(mean(stg1_slowsigma)+3*std(stg1_slowsigma)))));
-%     stg2_slowsigma=SlowSigma(find(Stage==2)); P_stg2_slowsigma(j,1)=mean(stg2_slowsigma(find(stg2_slowsigma<(mean(stg2_slowsigma)+3*std(stg2_slowsigma)))));
-%     stg3_slowsigma=SlowSigma(find(Stage==3)); P_stg3_slowsigma(j,1)=mean(stg3_slowsigma(find(stg3_slowsigma<(mean(stg3_slowsigma)+3*std(stg3_slowsigma)))));
-%     rem_slowsigma=SlowSigma(find(Stage==5)); P_rem_slowsigma(j,1)=mean(rem_slowsigma(find(rem_slowsigma<(mean(rem_slowsigma)+3*std(rem_slowsigma)))));
-%     
-%     wake_fastsigma=FastSigma(find(Stage==0)); P_wake_fastsigma(j,1)=mean(wake_fastsigma(find(wake_fastsigma<(mean(wake_fastsigma)+3*std(wake_fastsigma)))));
-%     stg1_fastsigma=FastSigma(find(Stage==1)); P_stg1_fastsigma(j,1)=mean(stg1_fastsigma(find(stg1_fastsigma<(mean(stg1_fastsigma)+3*std(stg1_fastsigma)))));
-%     stg2_fastsigma=FastSigma(find(Stage==2)); P_stg2_fastsigma(j,1)=mean(stg2_fastsigma(find(stg2_fastsigma<(mean(stg2_fastsigma)+3*std(stg2_fastsigma)))));
-%     stg3_fastsigma=FastSigma(find(Stage==3)); P_stg3_fastsigma(j,1)=mean(stg3_fastsigma(find(stg3_fastsigma<(mean(stg3_fastsigma)+3*std(stg3_fastsigma)))));
-%     rem_fastsigma=FastSigma(find(Stage==5)); P_rem_fastsigma(j,1)=mean(rem_fastsigma(find(rem_fastsigma<(mean(rem_fastsigma)+3*std(rem_fastsigma)))));
-%     
-% end
-% outputA=table(Channels',P_wake_delta,P_wake_theta,P_wake_alpha,P_wake_slowsigma,P_wake_fastsigma,...
-%     P_stg1_delta,P_stg1_theta,P_stg1_alpha,P_stg1_slowsigma,P_stg1_fastsigma,...
-%     P_stg2_delta,P_stg2_theta,P_stg2_alpha,P_stg2_slowsigma,P_stg2_fastsigma,...
-%     P_stg3_delta,P_stg3_theta,P_stg3_alpha,P_stg3_slowsigma,P_stg3_fastsigma,...
-%     P_rem_delta,P_rem_theta,P_rem_alpha,P_rem_slowsigma,P_rem_fastsigma);
-%     writetable(outputA,[desdir PathName(end) 'averages.csv'],'Delimiter',',','QuoteStrings',true);
+
 msgbox('Done! Find the csv outputs. Checking for outliers is recommended!')
 end
 
