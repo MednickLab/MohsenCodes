@@ -1,24 +1,4 @@
 function ace=ace_analysis()
-% Programmed by Mohsen Naji, 2018
-% Needs three input files to be browsed manually: 
-% 1) sleep edf data,  2) A text file with sleep scores in one column,
-% 3) Matlab-exported Kubios output of RR intervals
-% The outputs are saved in a structure called "ace". 
-% The output vectors have 4 elements, each represents powers in a 5-sec window.
-% The first and second elements are related to the activities before the HR bursts (-10 to -5; -5 to 0),
-% and the last two columns are related to 0-5 sec and 5-10 sec after HR bursts. 
-% Just double clock on the ace in the workspace to see the outputs. The names should be self explanatory. 
-% recommendations: You can create change scores in different ways.
-% 1) subtract the baseline value from each element. For example subtract blDelta_sws_F4 from avDelta_sws_F4. 
-% Since the increase in Delta/Sigma is in the second 5-sec bin you can calculate
-% a new variable: (avDelta_sws_F4(2)-blDelta_sws_F4)/(avDelta_sws_F4(2)+blDelta_sws_F4)
-% or (avDelta_sws_F4(2)-blDelta_sws_F4)/(blDelta_sws_F4); 
-% For HF, the 3rd element increases after the HR burst (see methods of my paper) 
-% 2) create a change score based on pre- and post-ace values:  (avDelta_sws_F4(2)-avDelta_sws_F4(3))/(avDelta_sws_F4(2)+avDelta_sws_F4(3))
-
-
-
-
 % --------------parameters
 segmin=3; % at least 3 minutes for a stable stage
 hrbwin=20; % window size around HR burst
@@ -203,26 +183,41 @@ for i=1:length(Selection)
     eval(['ace.avTheta_rem_' Channels{1, Selection(i)}  '= mean(sbj_hrb_thetapwr_bins5{i,1});']);
     eval(['ace.avTheta_nostage_' Channels{1, Selection(i)}  '= mean(sbj_hrb_thetapwr_bins7{i,1},1);']);
 end
-eval(['ace.avHF_sws_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins3,1);']);
-eval(['ace.avHF_stg2_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins2,1);']);
-eval(['ace.avHF_stg1_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins1,1);']);
-eval(['ace.avHF_wake_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins0,1);']);
-eval(['ace.avHF_rem_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins5,1);']);
-eval(['ace.avHF_nostage_' Channels{1, Selection(i)}  '= mean(sbj_hrb_HFpwr_bins7,1);']);
+eval(['ace.avHF_sws'  '= mean(sbj_hrb_HFpwr_bins3,1);']);
+eval(['ace.avHF_stg2' '= mean(sbj_hrb_HFpwr_bins2,1);']);
+eval(['ace.avHF_stg1'   '= mean(sbj_hrb_HFpwr_bins1,1);']);
+eval(['ace.avHF_wake'  '= mean(sbj_hrb_HFpwr_bins0,1);']);
+eval(['ace.avHF_rem'   '= mean(sbj_hrb_HFpwr_bins5,1);']);
+eval(['ace.avHF_nostage'  '= mean(sbj_hrb_HFpwr_bins7,1);']);
 
-eval(['ace.HRB_sws_' Channels{1, Selection(i)}  '= sbj_hrb3;']);
-eval(['ace.HRB_stg2_' Channels{1, Selection(i)}  '= sbj_hrb2;']);
-eval(['ace.HRB_stg1_' Channels{1, Selection(i)}  '= sbj_hrb1;']);
-eval(['ace.HRB_wake_' Channels{1, Selection(i)}  '= sbj_hrb0;']);
-eval(['ace.HRB_rem_' Channels{1, Selection(i)}  '= sbj_hrb5;']);
-eval(['ace.HRB_nostage_' Channels{1, Selection(i)}  '= sbj_hrb7;']);
+eval(['ace.RRtimeseries'  '= RRts;']);
+eval(['ace.HRB_sws_idx'  '= sbj_hrb_ind3;']);
+eval(['ace.HRB_stg2_idx' '= sbj_hrb_ind2;']);
+eval(['ace.HRB_stg1_idx'   '= sbj_hrb_ind1;']);
+eval(['ace.HRB_wake_idx'   '= sbj_hrb_ind0;']);
+eval(['ace.HRB_rem_idx'  '= sbj_hrb_ind5;']);
+eval(['ace.HRB_nostage_idx'  '= sbj_hrb_ind7;']);
 
-eval(['ace.HRB_EEG_sws_' Channels{1, Selection(i)}  '= sbj_hrb_EEG3;']);
-eval(['ace.HRB_EEG_stg2_' Channels{1, Selection(i)}  '= sbj_hrb_EEG2;']);
-eval(['ace.HRB_EEG_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_EEG0;']);
-eval(['ace.HRB_EEG_wake_' Channels{1, Selection(i)}  '= sbj_hrb_EEG0;']);
-eval(['ace.HRB_EEG_rem_' Channels{1, Selection(i)}  '= sbj_hrb_EEG5;']);
-eval(['ace.HRB_EEG_nostage_' Channels{1, Selection(i)}  '= sbj_hrb_EEG7;']);
+eval(['ace.HRB_sws_density'  '= length(sbj_hrb_ind3)/sum(duration(in3));']);
+eval(['ace.HRB_stg2_density' '= length(sbj_hrb_ind2)/sum(duration(in2));']);
+eval(['ace.HRB_stg1_density'   '= length(sbj_hrb_ind1)/sum(duration(in1));']);
+eval(['ace.HRB_wake_density'   '= length(sbj_hrb_ind0)/sum(duration(in0));']);
+eval(['ace.HRB_rem_density'  '= length(sbj_hrb_ind5)/sum(duration(in5));']);
+eval(['ace.HRB_nostage_density'  '= length(sbj_hrb_ind7)/sum(duration(in7));']);
+
+eval(['ace.HRB_sws'  '= sbj_hrb3;']);
+eval(['ace.HRB_stg2' '= sbj_hrb2;']);
+eval(['ace.HRB_stg1'   '= sbj_hrb1;']);
+eval(['ace.HRB_wake'   '= sbj_hrb0;']);
+eval(['ace.HRB_rem'  '= sbj_hrb5;']);
+eval(['ace.HRB_nostage'  '= sbj_hrb7;']);
+
+eval(['ace.HRB_EEG_sws_allCh'  '= sbj_hrb_EEG3;']);
+eval(['ace.HRB_EEG_stg2_allCh'  '= sbj_hrb_EEG2;']);
+eval(['ace.HRB_EEG_stg1_allCh'  '= sbj_hrb_EEG0;']);
+eval(['ace.HRB_EEG_wake_allCh'   '= sbj_hrb_EEG0;']);
+eval(['ace.HRB_EEG_rem_allCh'  '= sbj_hrb_EEG5;']);
+eval(['ace.HRB_EEG_nostage_allCh'   '= sbj_hrb_EEG7;']);
 
 disp('non-Ace analysis...')
 inc0=myblactivityy(in0,bnd,sbj_hrb_ind0,hrbwin,fs);
