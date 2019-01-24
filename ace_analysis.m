@@ -1,4 +1,11 @@
 function ace=ace_analysis()
+% Please cite Naji et al: Neurobiol Learn Mem. 2018 Dec 16;157:139-150.
+% doi: 10.1016/j.nlm.2018.12.008.
+% https://www.ncbi.nlm.nih.gov/pubmed/30562589
+% requires 3 files: sleep edf file, single column text file for sleep
+% stages (one for every 30 sec), and mat file of K_u_b_i_o_s output of
+% ECG R peaks 
+
 % --------------parameters
 segmin=3; % at least 3 minutes for a stable stage
 hrbwin=20; % window size around HR burst
@@ -214,10 +221,38 @@ eval(['ace.HRB_nostage'  '= sbj_hrb7;']);
 
 eval(['ace.HRB_EEG_sws_allCh'  '= sbj_hrb_EEG3;']);
 eval(['ace.HRB_EEG_stg2_allCh'  '= sbj_hrb_EEG2;']);
-eval(['ace.HRB_EEG_stg1_allCh'  '= sbj_hrb_EEG0;']);
+eval(['ace.HRB_EEG_stg1_allCh'  '= sbj_hrb_EEG1;']);
 eval(['ace.HRB_EEG_wake_allCh'   '= sbj_hrb_EEG0;']);
 eval(['ace.HRB_EEG_rem_allCh'  '= sbj_hrb_EEG5;']);
 eval(['ace.HRB_EEG_nostage_allCh'   '= sbj_hrb_EEG7;']);
+
+eval(['ace.HRB_DeltaHilbAmp_sws_allCh'  '= sbj_hrb_deltaPWR3;']);
+eval(['ace.HRB_DeltaHilbAmp_stg2_allCh'  '= sbj_hrb_deltaPWR2;']);
+eval(['ace.HRB_DeltaHilbAmp_stg1_allCh'  '= sbj_hrb_deltaPWR1;']);
+eval(['ace.HRB_DeltaHilbAmp_wake_allCh'   '= sbj_hrb_deltaPWR0;']);
+eval(['ace.HRB_DeltaHilbAmp_rem_allCh'  '= sbj_hrb_deltaPWR5;']);
+eval(['ace.HRB_DeltaHilbAmp_nostage_allCh'   '= sbj_hrb_deltaPWR7;']);
+
+eval(['ace.HRB_SigmaHilbAmp_sws_allCh'  '= sbj_hrb_sigmaPWR3;']);
+eval(['ace.HRB_SigmaHilbAmp_stg2_allCh'  '= sbj_hrb_sigmaPWR2;']);
+eval(['ace.HRB_SigmaHilbAmp_stg1_allCh'  '= sbj_hrb_sigmaPWR1;']);
+eval(['ace.HRB_SigmaHilbAmp_wake_allCh'   '= sbj_hrb_sigmaPWR0;']);
+eval(['ace.HRB_SigmaHilbAmp_rem_allCh'  '= sbj_hrb_sigmaPWR5;']);
+eval(['ace.HRB_SigmaHilbAmp_nostage_allCh'   '= sbj_hrb_sigmaPWR7;']);
+
+eval(['ace.HRB_ThetaHilbAmp_sws_allCh'  '= sbj_hrb_thetaPWR3;']);
+eval(['ace.HRB_ThetaHilbAmp_stg2_allCh'  '= sbj_hrb_thetaPWR2;']);
+eval(['ace.HRB_ThetaHilbAmp_stg1_allCh'  '= sbj_hrb_thetaPWR1;']);
+eval(['ace.HRB_ThetaHilbAmp_wake_allCh'   '= sbj_hrb_thetaPWR0;']);
+eval(['ace.HRB_ThetaHilbAmp_rem_allCh'  '= sbj_hrb_thetaPWR5;']);
+eval(['ace.HRB_ThetaHilbAmp_nostage_allCh'   '= sbj_hrb_thetaPWR7;']);
+
+eval(['ace.HRB_AlphaHilbAmp_sws_allCh'  '= sbj_hrb_alphaPWR3;']);
+eval(['ace.HRB_AlphaHilbAmp_stg2_allCh'  '= sbj_hrb_alphaPWR2;']);
+eval(['ace.HRB_AlphaHilbAmp_stg1_allCh'  '= sbj_hrb_alphaPWR1;']);
+eval(['ace.HRB_AlphaHilbAmp_wake_allCh'   '= sbj_hrb_alphaPWR0;']);
+eval(['ace.HRB_AlphaHilbAmp_rem_allCh'  '= sbj_hrb_alphaPWR5;']);
+eval(['ace.HRB_AlphaHilbAmp_nostage_allCh'   '= sbj_hrb_alphaPWR7;']);
 
 disp('non-Ace analysis...')
 inc0=myblactivityy(in0,bnd,sbj_hrb_ind0,hrbwin,fs);
