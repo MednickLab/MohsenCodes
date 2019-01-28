@@ -1,5 +1,5 @@
 function ace=ace_analysis()
-% Please cite Naji et al: Neurobiol Learn Mem. 2018 Dec 16;157:139-150.
+% Please cite Naji et al: Neurobiol Learn Mem 157:139-150.
 % doi: 10.1016/j.nlm.2018.12.008.
 % https://www.ncbi.nlm.nih.gov/pubmed/30562589
 % requires 3 files: sleep edf file, single column text file for sleep
@@ -14,7 +14,10 @@ m=1.25; % threshold for HR burst detection mean(RR)-m*std(RR)
 oc=1; %1 / 0 outlier control on eeg powers
 swa=[0.1 4]; alpha=[8 13]; theta=[4 7]; sigma=[12 16]; % EEG bands
 lf=[0.04 0.15]; hf=[0.15 0.4]; % LF, HF bands
-%-----------------
+
+RR_upperlim = 2;
+RR_lowerlim = 0.55; 
+%%%
 
 [FileName,PathName] = uigetfile([pwd '/*.edf'],'Select the sleep edf file');
 [X,Channels,fs]=edf2mat_samefss([PathName FileName]);
@@ -118,48 +121,86 @@ in5=find(Stage==5 & duration>segmin);
 disp('bouts extracted');
 %
 disp('HR burst analysis...')
-[sbj_hrb_ind7,sbj_hrb7,sbj_hrbHFPW7]=myhrbwindowedd(in7,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins7=myhrbbinnedd_EEG(sbj_hrbHFPW7,avbin,fs,oc);
+[sbj_hrb_ind7,sbj_hrb7,sbj_hrbHFPW7]=myhrbwindowedd(in7,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins7=myhrbbinnedd_EEG(sbj_hrbHFPW7,avbin,fs,oc);
 sbj_hrb_EEG7=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind7); 
 sbj_hrb_deltaPWR7=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind7); sbj_hrb_deltapwr_bins7=myhrbbinnedd_EEG(sbj_hrb_deltaPWR7,avbin,fs,oc);
 sbj_hrb_alphaPWR7=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind7); sbj_hrb_alphapwr_bins7=myhrbbinnedd_EEG(sbj_hrb_alphaPWR7,avbin,fs,oc);
 sbj_hrb_thetaPWR7=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind7); sbj_hrb_thetapwr_bins7=myhrbbinnedd_EEG(sbj_hrb_thetaPWR7,avbin,fs,oc);
 sbj_hrb_sigmaPWR7=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind7); sbj_hrb_sigmapwr_bins7=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR7,avbin,fs,oc);
 
-[sbj_hrb_ind0,sbj_hrb0,sbj_hrbHFPW0]=myhrbwindowedd(in0,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins0=myhrbbinnedd_EEG(sbj_hrbHFPW0,avbin,fs,oc);
+[sbj_hrb_ind0,sbj_hrb0,sbj_hrbHFPW0]=myhrbwindowedd(in0,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins0=myhrbbinnedd_EEG(sbj_hrbHFPW0,avbin,fs,oc);
 sbj_hrb_EEG0=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind0);
 sbj_hrb_deltaPWR0=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind0); sbj_hrb_deltapwr_bins0=myhrbbinnedd_EEG(sbj_hrb_deltaPWR0,avbin,fs,oc);
 sbj_hrb_alphaPWR0=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind0); sbj_hrb_alphapwr_bins0=myhrbbinnedd_EEG(sbj_hrb_alphaPWR0,avbin,fs,oc);
 sbj_hrb_thetaPWR0=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind0); sbj_hrb_thetapwr_bins0=myhrbbinnedd_EEG(sbj_hrb_thetaPWR0,avbin,fs,oc);
 sbj_hrb_sigmaPWR0=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind0); sbj_hrb_sigmapwr_bins0=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR0,avbin,fs,oc);
 
-[sbj_hrb_ind1,sbj_hrb1,sbj_hrbHFPW1]=myhrbwindowedd(in1,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins1=myhrbbinnedd_EEG(sbj_hrbHFPW1,avbin,fs,oc);
+[sbj_hrb_ind1,sbj_hrb1,sbj_hrbHFPW1]=myhrbwindowedd(in1,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins1=myhrbbinnedd_EEG(sbj_hrbHFPW1,avbin,fs,oc);
 sbj_hrb_EEG1=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind1);
 sbj_hrb_deltaPWR1=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind1); sbj_hrb_deltapwr_bins1=myhrbbinnedd_EEG(sbj_hrb_deltaPWR1,avbin,fs,oc);
 sbj_hrb_alphaPWR1=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind1); sbj_hrb_alphapwr_bins1=myhrbbinnedd_EEG(sbj_hrb_alphaPWR1,avbin,fs,oc);
 sbj_hrb_thetaPWR1=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind1); sbj_hrb_thetapwr_bins1=myhrbbinnedd_EEG(sbj_hrb_thetaPWR1,avbin,fs,oc);
 sbj_hrb_sigmaPWR1=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind1); sbj_hrb_sigmapwr_bins1=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR1,avbin,fs,oc);
 
-[sbj_hrb_ind2,sbj_hrb2,sbj_hrbHFPW2]=myhrbwindowedd(in2,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins2=myhrbbinnedd_EEG(sbj_hrbHFPW2,avbin,fs,oc);
+[sbj_hrb_ind2,sbj_hrb2,sbj_hrbHFPW2]=myhrbwindowedd(in2,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins2=myhrbbinnedd_EEG(sbj_hrbHFPW2,avbin,fs,oc);
 sbj_hrb_EEG2=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind2);
 sbj_hrb_deltaPWR2=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind2); sbj_hrb_deltapwr_bins2=myhrbbinnedd_EEG(sbj_hrb_deltaPWR2,avbin,fs,oc);
 sbj_hrb_alphaPWR2=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind2); sbj_hrb_alphapwr_bins2=myhrbbinnedd_EEG(sbj_hrb_alphaPWR2,avbin,fs,oc);
 sbj_hrb_thetaPWR2=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind2); sbj_hrb_thetapwr_bins2=myhrbbinnedd_EEG(sbj_hrb_thetaPWR2,avbin,fs,oc);
 sbj_hrb_sigmaPWR2=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind2); sbj_hrb_sigmapwr_bins2=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR2,avbin,fs,oc);
 
-[sbj_hrb_ind3,sbj_hrb3,sbj_hrbHFPW3]=myhrbwindowedd(in3,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins3=myhrbbinnedd_EEG(sbj_hrbHFPW3,avbin,fs,oc);
+[sbj_hrb_ind3,sbj_hrb3,sbj_hrbHFPW3]=myhrbwindowedd(in3,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins3=myhrbbinnedd_EEG(sbj_hrbHFPW3,avbin,fs,oc);
 sbj_hrb_EEG3=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind3);
 sbj_hrb_deltaPWR3=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind3); sbj_hrb_deltapwr_bins3=myhrbbinnedd_EEG(sbj_hrb_deltaPWR3,avbin,fs,oc);
 sbj_hrb_alphaPWR3=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind3); sbj_hrb_alphapwr_bins3=myhrbbinnedd_EEG(sbj_hrb_alphaPWR3,avbin,fs,oc);
 sbj_hrb_thetaPWR3=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind3); sbj_hrb_thetapwr_bins3=myhrbbinnedd_EEG(sbj_hrb_thetaPWR3,avbin,fs,oc);
 sbj_hrb_sigmaPWR3=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind3); sbj_hrb_sigmapwr_bins3=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR3,avbin,fs,oc);
 
-[sbj_hrb_ind5,sbj_hrb5,sbj_hrbHFPW5]=myhrbwindowedd(in5,bnd,fs,hrbwin,RRts,hfpw,m); sbj_hrb_HFpwr_bins5=myhrbbinnedd_EEG(sbj_hrbHFPW5,avbin,fs,oc);
+[sbj_hrb_ind5,sbj_hrb5,sbj_hrbHFPW5]=myhrbwindowedd(in5,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim); sbj_hrb_HFpwr_bins5=myhrbbinnedd_EEG(sbj_hrbHFPW5,avbin,fs,oc);
 sbj_hrb_EEG5=myhrbwindowedd_EEG(XEEG,hrbwin,fs,oc,sbj_hrb_ind5);
 sbj_hrb_deltaPWR5=myhrbwindowedd_EEG(X_deltaPWR,hrbwin,fs,oc,sbj_hrb_ind5); sbj_hrb_deltapwr_bins5=myhrbbinnedd_EEG(sbj_hrb_deltaPWR5,avbin,fs,oc);
 sbj_hrb_alphaPWR5=myhrbwindowedd_EEG(X_alphaPWR,hrbwin,fs,oc,sbj_hrb_ind5); sbj_hrb_alphapwr_bins5=myhrbbinnedd_EEG(sbj_hrb_alphaPWR5,avbin,fs,oc);
 sbj_hrb_thetaPWR5=myhrbwindowedd_EEG(X_thetaPWR,hrbwin,fs,oc,sbj_hrb_ind5); sbj_hrb_thetapwr_bins5=myhrbbinnedd_EEG(sbj_hrb_thetaPWR5,avbin,fs,oc);
 sbj_hrb_sigmaPWR5=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind5); sbj_hrb_sigmapwr_bins5=myhrbbinnedd_EEG(sbj_hrb_sigmaPWR5,avbin,fs,oc);
 
+%%%%
+disp('calculating bin data...');
+for i=1:length(Selection)
+    eval(['ace.binDelta_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins1{i,1};']);
+    eval(['ace.binDelta_sws_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins3{i,1};']);
+    eval(['ace.binDelta_stg2_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins2{i,1};']);
+    eval(['ace.binDelta_wake_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins0{i,1};']);
+    eval(['ace.binDelta_rem_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins5{i,1};']);
+    eval(['ace.binDelta_nostage_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins7{i,1};']);
+    
+    eval(['ace.binAlpha_sws_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins3{i,1};']);
+    eval(['ace.binAlpha_stg2_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins2{i,1};']);
+    eval(['ace.binAlpha_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins1{i,1};']);
+    eval(['ace.binAlpha_wake_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins0{i,1};']);
+    eval(['ace.binAlpha_rem_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins5{i,1};']);
+    eval(['ace.binAlpha_nostage_' Channels{1, Selection(i)}  '= sbj_hrb_alphapwr_bins7{i,1};']);
+    
+    eval(['ace.binSigma_sws_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins3{i,1};']);
+    eval(['ace.binSigma_stg2_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins2{i,1};']);
+    eval(['ace.binSigma_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins1{i,1};']);
+    eval(['ace.binSigma_wake_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins0{i,1};']);
+    eval(['ace.binSigma_rem_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins5{i,1};']);
+    eval(['ace.binSigma_nostage_' Channels{1, Selection(i)}  '= sbj_hrb_sigmapwr_bins7{i,1};']);
+    
+    eval(['ace.binTheta_sws_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins3{i,1};']);
+    eval(['ace.binTheta_stg2_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins2{i,1};']);
+    eval(['ace.binTheta_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins1{i,1};']);
+    eval(['ace.binTheta_wake_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins0{i,1};']);
+    eval(['ace.binTheta_rem_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins5{i,1};']);
+    eval(['ace.binTheta_nostage_' Channels{1, Selection(i)}  '= sbj_hrb_thetapwr_bins7{i,1};']);
+end
+eval(['ace.binHF_sws'  '= sbj_hrb_HFpwr_bins3;']);
+eval(['ace.binHF_stg2' '= sbj_hrb_HFpwr_bins2;']);
+eval(['ace.binHF_stg1'   '= sbj_hrb_HFpwr_bins1;']);
+eval(['ace.binHF_wake'  '= sbj_hrb_HFpwr_bins0;']);
+eval(['ace.binHF_rem'   '= sbj_hrb_HFpwr_bins5;']);
+eval(['ace.binHF_nostage'  '= sbj_hrb_HFpwr_bins7;']);
+%%%%
 disp('averaging...');
 for i=1:length(Selection)
     eval(['ace.avDelta_stg1_' Channels{1, Selection(i)}  '= mean(sbj_hrb_deltapwr_bins1{i,1},1);']);
@@ -382,14 +423,14 @@ fprintf('\n');
 fclose(fid);
 end
 
-function [sbj_hrb_ind,sbj_hrb,sbj_hrbHFPW]=myhrbwindowedd(in,bnd,fs,hrbwin,RRts,hfpw,m)
+function [sbj_hrb_ind,sbj_hrb,sbj_hrbHFPW]=myhrbwindowedd(in,bnd,fs,hrbwin,RRts,hfpw,m,RR_lowerlim, RR_upperlim)
 sbj_hrb_ind=[];
     sbj_hrb=[];
     sbj_hrbHFPW=[];
 if ~isempty(in)
     
     for i=1:length(in)
-        pmin=myHRB_finder(RRts(bnd(in(i),1):bnd(in(i),2)),fs,m);
+        pmin=myHRB_finder(RRts(bnd(in(i),1):bnd(in(i),2)),fs,m, RR_lowerlim, RR_upperlim);
         for j=1:length(pmin)
             sbj_hrb_ind=[sbj_hrb_ind;pmin(j)+bnd(in(i),1)-1];
         end
@@ -467,7 +508,7 @@ end
  
 end
 
-function pmin=myHRB_finder(samples,fs,m)
+function pmin=myHRB_finder(samples,fs,m, RR_lowerlim, RR_upperlim)
 % m=1.25;
 allmin=find((samples(1:end-2)-samples(2:end-1))>=0 & (samples(2:end-1)-samples(3:end))<=0);
 th=mean(samples(allmin))-m*std(samples(allmin)); %threshold
@@ -498,5 +539,14 @@ jj=1; pmnsp=[]; rjcts=[]; cmpmn=[];
                 rjsmp=[rjsmp find(pmin== rjcts(ii))];
             end
             pmin(rjsmp)=[];
-            falseR=find(samples(pmin)<0.55); pmin(falseR)=[];
+%             falseR=find(samples(pmin)<0.55); pmin(falseR)=[];
+            
+            rj = [];
+            for ii=1:length(pmin)
+                win = samples(max(1,pmin - 10*fs): min(pmin+10*fs , length(samples)));
+                if min(win) < RR_lowerlim || max(win)>RR_upperlim
+                    rj=[rj;ii];
+                end
+            end
+            pmin(rj)=[];
 end
