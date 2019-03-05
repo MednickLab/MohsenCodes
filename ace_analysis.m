@@ -93,7 +93,8 @@ if fs2~=fs
 end
 % read sleep score file
 tempallfilesTxt = dir(fullfile([PathName '*.txt']));
-alln_txt={tempallfilesTxt.name};
+alln_txt={tempallfilesTxt.name}
+FileName
 ii=zeros(1,length(alln_txt));
 for i=1:length(alln_txt)
 ii(i)=sum(alln_txt{1,i}(1:length(FileName(1:end-4)))==FileName(1:end-4));
@@ -110,14 +111,18 @@ for i=1:length(smp)-1
     bnd(i,:)=[smp(i)+1 smp(i+1)]; % beginning and end of each bout
 end
 Stage=mrkr([1;t+1]); % bout sleep stage
+assignin('base','bnd',bnd);
+
 duration=(bnd(:,2)-bnd(:,1)+1)/(fs*60); 
 % bouts longer than segmin at each stage
-in7=find(Stage==7 & duration>segmin); 
-in0=find(Stage==0 & duration>segmin);
-in1=find(Stage==1 & duration>segmin);
-in2=find(Stage==2 & duration>segmin);
-in3=find(Stage==3 & duration>segmin);
-in5=find(Stage==5 & duration>segmin);
+in7=find(Stage==7 & duration>segmin & bnd(:,2)<length(RRts)); 
+in0=find(Stage==0 & duration>segmin & bnd(:,2)<length(RRts));
+in1=find(Stage==1 & duration>segmin & bnd(:,2)<length(RRts));
+in2=find(Stage==2 & duration>segmin & bnd(:,2)<length(RRts));
+in3=find(Stage==3 & duration>segmin & bnd(:,2)<length(RRts));
+in5=find(Stage==5 & duration>segmin & bnd(:,2)<length(RRts));
+assignin('base','RRts',RRts);
+
 disp('bouts extracted');
 %
 disp('HR burst analysis...')
@@ -165,6 +170,7 @@ sbj_hrb_sigmaPWR5=myhrbwindowedd_EEG(X_sigmaPWR,hrbwin,fs,oc,sbj_hrb_ind5); sbj_
 
 %%%%
 disp('calculating bin data...');
+eval('ace.Channels= Channels(1, Selection);');
 for i=1:length(Selection)
     eval(['ace.binDelta_stg1_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins1{i,1};']);
     eval(['ace.binDelta_sws_' Channels{1, Selection(i)}  '= sbj_hrb_deltapwr_bins3{i,1};']);
