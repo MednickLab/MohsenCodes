@@ -111,7 +111,7 @@ for i=1:length(smp)-1
     bnd(i,:)=[smp(i)+1 smp(i+1)]; % beginning and end of each bout
 end
 Stage=mrkr([1;t+1]); % bout sleep stage
-assignin('base','bnd',bnd);
+% assignin('base','bnd',bnd);
 
 duration=(bnd(:,2)-bnd(:,1)+1)/(fs*60); 
 % bouts longer than segmin at each stage
@@ -121,7 +121,7 @@ in1=find(Stage==1 & duration>segmin & bnd(:,2)<length(RRts));
 in2=find(Stage==2 & duration>segmin & bnd(:,2)<length(RRts));
 in3=find(Stage==3 & duration>segmin & bnd(:,2)<length(RRts));
 in5=find(Stage==5 & duration>segmin & bnd(:,2)<length(RRts));
-assignin('base','RRts',RRts);
+% assignin('base','RRts',RRts);
 
 disp('bouts extracted');
 %
